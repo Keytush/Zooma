@@ -1,5 +1,7 @@
-from json import JSONEncoder     
-from datetime import date       
+from json import JSONEncoder
+from datetime import date
+
+
 class ZooJsonEncoder(JSONEncoder):
     # You may need to adapt this class to deal with different type of objects 
     def default(self, obj):
