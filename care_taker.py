@@ -11,3 +11,9 @@ class CareTaker:
         self.feeding_plan = {}  # every 2nd day
         self.enclosure_cleaning_plan = {}   # every 3rd day
         self.medical_check_up_plan = {}     # every 5 weeks
+
+    def addAnimal(self, animal):
+        self.list_of_animals.append(animal)
+
+    def remove_animal(self, animal):
+        self.list_of_animals.remove(animal)

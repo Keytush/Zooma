@@ -24,3 +24,16 @@ class Animal:
     def setEnclosure(self, enclosure_id):
         self.enclosure = enclosure_id
 
+    def birth(self):
+        child = Animal(self.species_name, self.common_name, 0)
+        # zoo.addAnimal(child)
+        child.enclosure = self.enclosure
+        # if self.enclosure:
+        #     enclosure1 = zoo.getEnclosure(self.enclosure)
+        #     enclosure1.animals.append(child)
+        return child
+
+    def assign_caretaker(self, care_taker_id):
+        self.care_taker = care_taker_id
+
+

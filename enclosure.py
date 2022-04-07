@@ -19,6 +19,4 @@ class Enclosure:
     def clean(self):
         self.cleaning_record.append(datetime.datetime.now())
 
-    def getAnimals(self):
-        pass
 
