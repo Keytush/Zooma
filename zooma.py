@@ -85,7 +85,7 @@ class Animal_ID(Resource):
         # Remove the animal from caretaker
         employee = my_zoo.getEmployee(targeted_animal.care_taker)
         if employee:
-            employee.remove_animal(targeted_animal)
+            employee.removeAnimal(targeted_animal)
         # Remove animal from zoo
         my_zoo.removeAnimal(targeted_animal)
         return jsonify(f"Animal with ID {animal_id} was removed")
@@ -278,7 +278,7 @@ class AssignAnimalToCaretaker(Resource):
         old_caretaker = my_zoo.getEmployee(targeted_animal.care_taker)
         # If animal has caretaker, remove the animal from him
         if old_caretaker:
-            old_caretaker.remove_animal(targeted_animal)
+            old_caretaker.removeAnimal(targeted_animal)
         # Assign caretaker to animal
         targeted_animal.assign_caretaker(employee_id)
         # Assign animal to caretaker

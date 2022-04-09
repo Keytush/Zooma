@@ -15,5 +15,5 @@ class CareTaker:
     def addAnimal(self, animal):
         self.list_of_animals.append(animal)
 
-    def remove_animal(self, animal):
+    def removeAnimal(self, animal):
         self.list_of_animals.remove(animal)
