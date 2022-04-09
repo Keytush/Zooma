@@ -80,6 +80,12 @@ class Animal_ID(Resource):
         enclosure = my_zoo.getEnclosure(targeted_animal.enclosure)
         if enclosure:
             enclosure.removeAnimal(targeted_animal)
+
+        # If animal has caretaker
+        # Remove the animal from caretaker
+        employee = my_zoo.getEmployee(targeted_animal.care_taker)
+        if employee:
+            employee.remove_animal(targeted_animal)
         # Remove animal from zoo
         my_zoo.removeAnimal(targeted_animal)
         return jsonify(f"Animal with ID {animal_id} was removed")
@@ -290,6 +296,43 @@ class GetCaretakerAnimals(Resource):
         return jsonify(targeted_employee.list_of_animals)
 
 
+@zooma_api.route('/employees/stats')
+class EmployeesStat(Resource):
+    def get(self):
+        return jsonify(my_zoo.getEmployeeStat())
+
+
+@zooma_api.route('/employee/<employee_id>')
+class RemoveEmployee(Resource):
+    def delete(self, employee_id):
+        targeted_employee = my_zoo.getEmployee(employee_id)
+        # If the enclosure does not exist, return a message
+        if not targeted_employee:
+            return jsonify(f"Enclosure with ID {employee_id} was not found")
+        my_zoo.removeEmployee(targeted_employee)
+        
+        return jsonify(f"Employee with ID {employee_id} was removed")
+
+
+@zooma_api.route('/tasks/cleaning')
+class CleaningPlan(Resource):
+    def get(self):
+        my_zoo.createCleaningPlan()
+        return jsonify(my_zoo.cleaning_plan)
+
+
+@zooma_api.route('/tasks/medical')
+class MedicalPlan(Resource):
+    def get(self):
+        my_zoo.createMedicalPlan()
+        return jsonify(my_zoo.medical_plan)
+
+
+@zooma_api.route('/tasks/feeding')
+class FeedingPlan(Resource):
+    def get(self):
+        my_zoo.createFeedingPlan()
+        return jsonify(my_zoo.feeding_plan)
 
 
 if __name__ == '__main__':

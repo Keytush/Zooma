@@ -1,8 +1,14 @@
+import random
+import datetime
 class Zoo:
     def __init__(self):
         self.animals = []
         self.enclosures = []
         self.employees = []
+        # Plans
+        self.cleaning_plan = {}
+        self.medical_plan = {}
+        self.feeding_plan = {}
 
     # Animal
     def addAnimal(self, animal):
@@ -70,6 +76,20 @@ class Zoo:
                 return enclosure
 
     def removeEnclosure(self, enclosure):
+        if len(self.enclosures) <= 1:
+            return print("Cannot remove enclosure and transfer its animals, due to lack of enclosures")
+
+        # Creates a list of employees except the employees we want to remove
+        enclosures_to_choose = []
+        for e in self.enclosures:
+            if e != enclosure:
+                enclosures_to_choose.append(e)
+
+        # Randomly select an employee who inherits the animals
+        chosen_enclosure = random.choice(enclosures_to_choose)
+        for animal in enclosure.animals:
+            chosen_enclosure.addAnimal(animal)
+        # Remove enclosure from zoo
         self.enclosures.remove(enclosure)
 
     # Employee
@@ -82,4 +102,81 @@ class Zoo:
                 return employee
 
     def removeEmployee(self, employee):
+        if len(self.employees) <= 1:
+            return print("Cannot remove employee and transfer its animals, due to lack of employees")
+
+        # Creates a list of employees except the employees we want to remove
+        employees_to_choose = []
+        for e in self.employees:
+            if e != employee:
+                employees_to_choose.append(e)
+
+        # Randomly select an employee who inherits the animals
+        chosen_employee = random.choice(employees_to_choose)
+        for animal in employee.list_of_animals:
+            chosen_employee.addAnimal(animal)
+        # Remove the employee from zoo
         self.employees.remove(employee)
+
+
+    # The min, max and the average number of
+    # animals under the supervision of a single
+    # employee
+    def getEmployeeStat(self):
+        stat = {}
+        all_animals = []
+        for i in range(0, len(self.employees)):
+            all_animals.append(len(self.employees[i].list_of_animals))
+
+        stat["min"] = min(all_animals)
+        stat["max"] = max(all_animals)
+        stat["average_number"] = sum(all_animals) / len(self.employees)
+
+        return stat
+
+
+    # Plans
+    def createCleaningPlan(self):
+        if not self.employees:
+            return print("There are no employees, who would clean the enclosures")
+        # For every enclosure
+        for enclosure in self.enclosures:
+            next_cleaned_enclosure = None
+            if enclosure.cleaning_record:
+                # Find the last cleaning record
+                last_cleaned_enclosure = enclosure.cleaning_record[-1]
+                next_cleaned_enclosure = last_cleaned_enclosure + datetime.timedelta(days=3)
+            else:
+                next_cleaned_enclosure = datetime.datetime.now()
+
+            next_cleaned_enclosure = f"{next_cleaned_enclosure.day}.{next_cleaned_enclosure.month}.{next_cleaned_enclosure.year}"
+            self.cleaning_plan[enclosure.enclosure_id] = ["Next date for cleaning: " + next_cleaned_enclosure,
+                                                          "Responsible employee: " + random.choice(self.employees)]
+
+    def createMedicalPlan(self):
+        for animal in self.animals:
+            next_medical_checkup = None
+            if animal.vet_record:
+                last_medical_checkup = animal.vet_record[-1]
+                next_medical_checkup = last_medical_checkup + datetime.timedelta(days=35)
+            else:
+                next_medical_checkup = datetime.datetime.now()
+
+            next_medical_checkup = f"{next_medical_checkup.day}.{next_medical_checkup.month}.{next_medical_checkup.year}"
+            self.medical_plan[animal.animal_id] = "Next date for medical check-up: " + next_medical_checkup
+
+
+    def createFeedingPlan(self):
+        if not self.employees:
+            return print("There are no employees, who would feed the animals")
+        for animal in self.animals:
+            next_feeding = None
+            if animal.feeding_record:
+                last_feeding = animal.feeding_record[-1]
+                next_feeding = last_feeding + datetime.timedelta(days=2)
+            else:
+                next_feeding = datetime.datetime.now()
+
+            next_feeding = f"{next_feeding.day}.{next_feeding.month}.{next_feeding.year}"
+            self.medical_plan[animal.animal_id] = ["Next date for feeding: " + next_feeding,
+                                                   "Responsible employee: " + random.choice(self.employees)]
