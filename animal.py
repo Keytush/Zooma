@@ -21,18 +21,17 @@ class Animal:
     def vet(self):
         self.vet_record.append(datetime.datetime.now())
 
+    # Set the enclosure to animal
     def setEnclosure(self, enclosure_id):
         self.enclosure = enclosure_id
 
+    # Creating a child animal
     def birth(self):
         child = Animal(self.species_name, self.common_name, 0)
-        # zoo.addAnimal(child)
         child.enclosure = self.enclosure
-        # if self.enclosure:
-        #     enclosure1 = zoo.getEnclosure(self.enclosure)
-        #     enclosure1.animals.append(child)
         return child
 
+    # Assign a caretaker to animal
     def assign_caretaker(self, care_taker_id):
         self.care_taker = care_taker_id
 

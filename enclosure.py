@@ -10,13 +10,14 @@ class Enclosure:
         self.animals = []
         self.cleaning_record = []
 
+    # Add animal to enclosure's list of animals
     def addAnimal(self, animal):
         self.animals.append(animal)
 
+    # Remove animal from enclosure's list of animals
     def removeAnimal(self, animal):
         self.animals.remove(animal)
 
+    # Register a time of cleaning
     def clean(self):
         self.cleaning_record.append(datetime.datetime.now())
-
-
