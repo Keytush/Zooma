@@ -79,7 +79,7 @@ class Zoo:
         if len(self.enclosures) <= 1:
             return print("Cannot remove enclosure and transfer its animals, due to lack of enclosures")
 
-        # Creates a list of employees except the employees we want to remove
+        # Creates a list of enclosures except the enclosure we want to remove
         enclosures_to_choose = []
         for e in self.enclosures:
             if e != enclosure:
@@ -151,7 +151,7 @@ class Zoo:
 
             next_cleaned_enclosure = f"{next_cleaned_enclosure.day}.{next_cleaned_enclosure.month}.{next_cleaned_enclosure.year}"
             self.cleaning_plan[enclosure.enclosure_id] = ["Next date for cleaning: " + next_cleaned_enclosure,
-                                                          "Responsible employee: " + random.choice(self.employees)]
+                                                          "Responsible employee: " + (random.choice(self.employees)).employee_id]
 
     def createMedicalPlan(self):
         for animal in self.animals:
@@ -178,5 +178,5 @@ class Zoo:
                 next_feeding = datetime.datetime.now()
 
             next_feeding = f"{next_feeding.day}.{next_feeding.month}.{next_feeding.year}"
-            self.medical_plan[animal.animal_id] = ["Next date for feeding: " + next_feeding,
-                                                   "Responsible employee: " + random.choice(self.employees)]
+            self.feeding_plan[animal.animal_id] = ["Next date for feeding: " + next_feeding,
+                                                   "Responsible employee: " + (random.choice(self.employees)).employee_id]
